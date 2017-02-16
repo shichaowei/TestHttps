@@ -5,9 +5,9 @@
 	<classpathentry kind="lib" path="lib/commons-codec-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/fluent-hc-4.2.1.jar"/>
-	<classpathentry kind="lib" path="lib/httpclient-4.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.2.1.jar" sourcepath="E:/software/httpcomponents-client-4.4.1-src.zip"/>
 	<classpathentry kind="lib" path="lib/httpclient-cache-4.2.1.jar"/>
-	<classpathentry kind="lib" path="lib/httpcore-4.2.1.jar" sourcepath="E:/software/software/httpcomponents-core-4.4.4-src.zip">
+	<classpathentry kind="lib" path="lib/httpcore-4.2.1.jar" sourcepath="E:/software/httpcomponents-core-4.2.1-src.zip">
 		<attributes>
 			<attribute name="source_encoding" value="UTF-8"/>
 		</attributes>

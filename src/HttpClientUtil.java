@@ -14,13 +14,18 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 /*
  * 利用HttpClient进行post请求的工具类
  */
 public class HttpClientUtil {
+	public String cookie;
+	
+	
 	public String doPostviamap(String url,Map<String,String> map,String charset){
 		HttpClient httpClient = null;
 		HttpPost httpPost = null;
@@ -39,8 +44,10 @@ public class HttpClientUtil {
 				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(list,charset);
 				httpPost.setEntity(entity);
 			}
+			
 			HttpResponse response = httpClient.execute(httpPost);
 			if(response != null){
+				
 				HttpEntity resEntity = response.getEntity();
 				if(resEntity != null){
 					result = EntityUtils.toString(resEntity,charset);
@@ -89,7 +96,17 @@ public class HttpClientUtil {
             HttpGet request = new HttpGet();  
             request.setURI(new URI(url));  
             HttpResponse response = client.execute(request);  
-  
+            //拿到cookie
+            List<Cookie> cookies = ((AbstractHttpClient) client).getCookieStore().getCookies();
+            if (cookies.isEmpty()) {    
+                System.out.println("None");    
+            } else {    
+                for (int i = 0; i < cookies.size(); i++) {  
+                    System.out.println("- " + cookies.get(i).toString());  
+                }    
+            }  
+            
+            
             in = new BufferedReader(new InputStreamReader(response.getEntity()  
                     .getContent()));  
             StringBuffer sb = new StringBuffer("");  
