@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -71,8 +72,8 @@ public class HttpClientUtil {
 			httpClient = new SSLClient();
 			httpPost = new HttpPost(url);
 			//设置参数
-			StringEntity entity =new StringEntity(body);
-			entity.setContentEncoding("utf-8");
+			StringEntity entity =new StringEntity(body,Charset.forName("utf-8"));
+			entity.setContentEncoding("UTF-8");
 			entity.setContentType("application/json");
 			
 			if(token !=null && cookiedomain != null){
@@ -112,7 +113,7 @@ public class HttpClientUtil {
 	}
 	
 	
-	public String doGet(String url){
+	public String doGet(String url,String cookiedomain,String token){
 		BufferedReader in = null;  
 		  
         String content = null;  
@@ -122,6 +123,15 @@ public class HttpClientUtil {
             // 实例化HTTP方法  
             HttpGet request = new HttpGet();  
             request.setURI(new URI(url));  
+            
+            if(token !=null && cookiedomain != null){
+				 CookieStore cookieStore = new BasicCookieStore();
+			     BasicClientCookie cookie1 = new BasicClientCookie("token",token);
+			     cookie1.setDomain(cookiedomain);
+			     cookieStore.addCookie(cookie1);
+				((AbstractHttpClient) client).setCookieStore(cookieStore);
+			}
+            
             HttpResponse response = client.execute(request);  
             //拿到cookie
             List<Cookie> cookies = ((AbstractHttpClient) client).getCookieStore().getCookies();
